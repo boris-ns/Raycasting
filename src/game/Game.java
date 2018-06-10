@@ -1,4 +1,4 @@
-package engine;
+package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-public class Main extends JFrame implements Runnable {
+public class Game extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	public static final int MAP_WIDTH  = 15;
@@ -46,7 +46,7 @@ public class Main extends JFrame implements Runnable {
 		{1,1,1,1,1,1,1,4,4,4,4,4,4,4,4}
 	};
 	
-	public Main() {
+	public Game() {
 		thread = new Thread(this);
 		image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData(); // "Connect" image and pixels
@@ -63,6 +63,7 @@ public class Main extends JFrame implements Runnable {
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setBackground(Color.BLACK);
 		setVisible(true);
 		
@@ -144,6 +145,6 @@ public class Main extends JFrame implements Runnable {
 	}
 	
 	public static void main(String[] args) {
-		new Main();
+		new Game();
 	}
 }

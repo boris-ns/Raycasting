@@ -1,4 +1,4 @@
-package engine;
+package game;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ public class Screen {
 	public int[] update(Camera cam, int[] pixels) {
 		paintBackground(pixels);
 		
-		for (int x = 0; x < Main.SCREEN_WIDTH; ++x) {
+		for (int x = 0; x < Game.SCREEN_WIDTH; ++x) {
 			int mapX = (int) cam.getxPos();
 			int mapY = (int) cam.getyPos();
 			
-			double cameraX = 2 * x / (double)Main.SCREEN_WIDTH - 1;
+			double cameraX = 2 * x / (double)Game.SCREEN_WIDTH - 1;
 			double rayDirX = cam.getxDir() + cam.getxPlane() * cameraX;
 			double rayDirY = cam.getyDir() + cam.getyPlane() * cameraX;
 		
@@ -74,18 +74,18 @@ public class Screen {
 			
 			//Now calculate the height of the wall based on the distance from the camera
 			int lineHeight;
-			if(perpWallDist > 0) lineHeight = Math.abs((int)(Main.SCREEN_HEIGHT / perpWallDist));
-			else lineHeight = Main.SCREEN_HEIGHT;
+			if(perpWallDist > 0) lineHeight = Math.abs((int)(Game.SCREEN_HEIGHT / perpWallDist));
+			else lineHeight = Game.SCREEN_HEIGHT;
 			//calculate lowest and highest pixel to fill in current stripe
-			int drawStart = -lineHeight / 2 +  Main.SCREEN_HEIGHT / 2;
+			int drawStart = -lineHeight / 2 +  Game.SCREEN_HEIGHT / 2;
 			
 			if(drawStart < 0)
 			    drawStart = 0;
 			
-			int drawEnd = lineHeight / 2 +  Main.SCREEN_HEIGHT / 2;
+			int drawEnd = lineHeight / 2 +  Game.SCREEN_HEIGHT / 2;
 			
-			if(drawEnd >=  Main.SCREEN_HEIGHT) 
-			    drawEnd =  Main.SCREEN_HEIGHT - 1;
+			if(drawEnd >=  Game.SCREEN_HEIGHT) 
+			    drawEnd =  Game.SCREEN_HEIGHT - 1;
 			
 			// What texture to draw ?
 			int textNum = map[mapX][mapY] - 1;
@@ -99,20 +99,20 @@ public class Screen {
 			
 			wallX -= Math.floor(wallX);
 			
-			int texX = (int)(wallX * Main.TEXTURE_SIZE);
+			int texX = (int)(wallX * Game.TEXTURE_SIZE);
 			if ((hitSide == 0 && rayDirX > 0) || (hitSide == 1 && rayDirY < 0))
-				texX = Main.TEXTURE_SIZE - texX - 1;
+				texX = Game.TEXTURE_SIZE - texX - 1;
 
 			for(int y=drawStart; y<drawEnd; y++) {
-			    int texY = (((y*2 - Main.SCREEN_HEIGHT + lineHeight) << 6) / lineHeight) / 2;
+			    int texY = (((y*2 - Game.SCREEN_HEIGHT + lineHeight) << 6) / lineHeight) / 2;
 			    int color;
 			    
 			    if(hitSide == 0) 
-			    	color = textures.get(textNum).getPixels()[texX + (texY * Main.TEXTURE_SIZE)];
+			    	color = textures.get(textNum).getPixels()[texX + (texY * Game.TEXTURE_SIZE)];
 			    else 
-			    	color = (textures.get(textNum).getPixels()[texX + (texY * Main.TEXTURE_SIZE)]>>1) & 8355711;//Make y sides darker
+			    	color = (textures.get(textNum).getPixels()[texX + (texY * Game.TEXTURE_SIZE)]>>1) & 8355711;//Make y sides darker
 			    
-			    pixels[x + y * (Main.SCREEN_WIDTH)] = color;
+			    pixels[x + y * (Game.SCREEN_WIDTH)] = color;
 			}
 		}
 		
