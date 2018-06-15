@@ -1,5 +1,6 @@
 package utils;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 
-	public static BufferedImage loadImage(String path) {
+	public static BufferedImage loadBufferedImage(String path) {
 		BufferedImage image = null;
 		
 		try {
@@ -19,5 +20,17 @@ public class ImageLoader {
 		}
 		
 		return image;
+	}
+	
+	public static Image loadImage(String path) {
+		Image img = null;
+		
+		try {
+			img = ImageIO.read(new File(path));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		
+		return img;
 	}
 }

@@ -8,9 +8,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
+import editor.Editor;
 import game.Game;
 
 public class StartScreen extends JFrame {
@@ -25,13 +29,13 @@ public class StartScreen extends JFrame {
 	private JButton btnExit;
 	
 	public StartScreen() {
-		setTitle("Raycast maze");
+		setLookAndFeel();
+		setTitle("Rayze");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		
 		setLayout(new BorderLayout());
 		JLabel bgPanel = new JLabel(new ImageIcon("res/bg_start_screen.png"));
 		add(bgPanel);
@@ -60,7 +64,8 @@ public class StartScreen extends JFrame {
 		btnLoadLevel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				JFileChooser chooser = new JFileChooser();
+				int retVal = chooser.showOpenDialog(StartScreen.this);
 			}
 		});
 		
@@ -70,7 +75,7 @@ public class StartScreen extends JFrame {
 		btnCreateLevel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				new Editor();
 			}
 		});
 		
@@ -83,6 +88,23 @@ public class StartScreen extends JFrame {
 				System.exit(0);
 			}
 		});
+	}
+	
+	/**
+	 * Sets system look and feel.
+	 */
+	private void setLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {

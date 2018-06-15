@@ -15,7 +15,7 @@ public class Texture {
 		this.path = path;
 		pixels = new int[size * size];
 		
-		BufferedImage image = ImageLoader.loadImage(path);
+		BufferedImage image = ImageLoader.loadBufferedImage(path);
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 	}
 	
