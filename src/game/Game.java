@@ -61,7 +61,6 @@ public class Game extends JFrame implements Runnable {
 		// Init JFrame
 		setTitle("Rayze");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setBackground(Color.BLACK);

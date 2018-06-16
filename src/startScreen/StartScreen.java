@@ -20,8 +20,8 @@ import game.Game;
 public class StartScreen extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static final int SCREEN_WIDTH  = 400;
-	private static final int SCREEN_HEIGHT = 200;
+	private static final int  SCREEN_WIDTH     = 400;
+	private static final int  SCREEN_HEIGHT    = 200;
 	
 	private JButton btnStart;
 	private JButton btnLoadLevel;
@@ -37,7 +37,7 @@ public class StartScreen extends JFrame {
 		setResizable(false);
 
 		setLayout(new BorderLayout());
-		JLabel bgPanel = new JLabel(new ImageIcon("res/bg_start_screen.png"));
+		JLabel bgPanel = new JLabel(new ImageIcon("res/bg_start_screen2.png"));
 		add(bgPanel);
 		bgPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 120));
 		
@@ -54,7 +54,7 @@ public class StartScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Game();
-				setVisible(false);
+				//setVisible(false);
 			}
 		});
 		
