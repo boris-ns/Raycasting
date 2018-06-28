@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import common.Constants;
+import utils.Writer;
+
 public class EditorController {
 	
 	private EditorModel model;
@@ -55,51 +58,36 @@ public class EditorController {
 	class WorksheetListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int mapX = Math.floorDiv(e.getX(), Worksheet.TILE_SIZE);
-			int mapY = Math.floorDiv(e.getY(), Worksheet.TILE_SIZE);
+			int mapX = Math.floorDiv(e.getX(), Constants.TILE_SIZE);
+			int mapY = Math.floorDiv(e.getY(), Constants.TILE_SIZE);
 			
 			model.setTileToMap(mapX, mapY, currentTile);
+			paint();
+			
+			// This is here for now just for testing purposes
+			Writer.writeMapToFile(model.getMap(), Constants.mapsLocation + "testMap.txt");
 		}
 		
+		/**
+		 * Paints whole map to the worksheet.
+		 */
 		private void paint() {
 			Graphics g = view.getWorksheetGraphics();
 			int map[][] = model.getMap();
-			final int TILE_SIZE = Worksheet.TILE_SIZE;
+			final int TILE_SIZE = Constants.TILE_SIZE;
 			
 			for (int i = 0; i < map.length; ++i) {
 	        	for (int j = 0; j < map[i].length; ++j) {
-	        		switch (map[i][j]) {
-	        		case 0: 
+	        		if (map[i][j] == 0) {
 	        			g.setColor(Color.GRAY);
 	        			g.fillRect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-	        			break;
-	        			
-	        		case 1:
-	        			g.drawImage(model.getTileAtIndex(0), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-	        			break;
-	        			
-	        		case 2:
-	        			g.drawImage(model.getTileAtIndex(1), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-	        			break;
-	        			
-	        		case 3:
-	        			g.drawImage(model.getTileAtIndex(2), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-	        			break;
-	        			
-	        		case 4:
-	        			g.drawImage(model.getTileAtIndex(3), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-	        			break;
-	        			
-	        		case 5:
-	        			g.drawImage(model.getTileAtIndex(4), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-	        			break;
-	        			
-	        		default:
-	        			System.out.println("Error while painting the map!");
-	        			System.out.println("Tile doesn't exist for this ID -> " + map[i][j]);
+	        		} else {
+	        			g.drawImage(model.getTileAtIndex(map[i][j] - 1), i * TILE_SIZE, 
+	        						j * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
 	        		}
 	        	}
 	        }
 		}
 	}
+	
 }

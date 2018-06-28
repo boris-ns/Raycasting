@@ -5,12 +5,21 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
+import common.Constants;
+
 public class Worksheet extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	public static final int TILE_SIZE = 32;
 	
 	public Worksheet() {
+		
 	}
 	
+	@Override
+	protected void paintComponent(Graphics g) {
+		int size = Constants.DEFAULT_MAP_SIZE * Constants.TILE_SIZE;
+		
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 0, size, size);
+	}
 }

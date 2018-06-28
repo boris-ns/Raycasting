@@ -3,14 +3,16 @@ package editor;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import common.Constants;
 import utils.ImageLoader;
 
 public class EditorModel {
-
+	
 	private int[][] map;
 	private ArrayList<BufferedImage> tiles;
 	
 	public EditorModel() {
+		map = new int[Constants.DEFAULT_MAP_SIZE][Constants.DEFAULT_MAP_SIZE];
 		tiles = new ArrayList<BufferedImage>();
 		loadTiles();
 	}
@@ -27,11 +29,11 @@ public class EditorModel {
 	}
 	
 	public void setTileToMap(int x, int y, TileType type) {
+		// TODO: if player already exists, don't add him again
 		try {
 			map[x][y] = type.getValue();
-			
 		} catch(IndexOutOfBoundsException e) {
-			System.out.println("Index out of bounds!");
+			System.out.println("Index out of bounds! X: " + x + " Y: " + y + " tile type: " + type);
 			e.printStackTrace();
 		}
 	}
