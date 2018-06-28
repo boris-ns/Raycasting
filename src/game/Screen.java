@@ -62,7 +62,7 @@ public class Screen {
 					hitSide = 1;
 				}
 				
-				if (map[mapX][mapY] != 0)
+				if (map[mapX][mapY] != 0 && map[mapX][mapY] != 5)
 					wallHit = true;
 			}
 			

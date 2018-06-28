@@ -33,6 +33,7 @@ public class Camera implements KeyListener {
 			if (map[(int)xPos][(int)(yPos + yDir * MOVE_SPEED)] == 0) 
 				yPos += yDir * MOVE_SPEED;
 		}
+		
 		if (keyDownPressed) {
 			if (map[(int)(xPos - xDir * MOVE_SPEED)][(int)yPos] == 0)
 				xPos -= xDir * MOVE_SPEED;
@@ -40,6 +41,7 @@ public class Camera implements KeyListener {
 			if (map[(int)xPos][(int)(yPos - yDir * MOVE_SPEED)] == 0) 
 				yPos -= yDir * MOVE_SPEED;
 		}
+		
 		if (keyRightPressed) {
 			double oldxDir=xDir;
 			xDir=xDir*Math.cos(-ROTATION_SPEED) - yDir*Math.sin(-ROTATION_SPEED);
@@ -48,6 +50,7 @@ public class Camera implements KeyListener {
 			xPlane=xPlane*Math.cos(-ROTATION_SPEED) - yPlane*Math.sin(-ROTATION_SPEED);
 			yPlane=oldxPlane*Math.sin(-ROTATION_SPEED) + yPlane*Math.cos(-ROTATION_SPEED);
 		}
+		
 		if (keyLeftPressed) {
 			double oldxDir=xDir;
 			xDir=xDir*Math.cos(ROTATION_SPEED) - yDir*Math.sin(ROTATION_SPEED);
@@ -120,7 +123,6 @@ public class Camera implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-	
 
 	public double getxPos() {
 		return xPos;

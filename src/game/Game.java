@@ -9,11 +9,13 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import utils.Reader;
+
 public class Game extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	public static final int MAP_WIDTH  = 15;
-	public static final int MAP_HEIGHT = 15;
+	public static int MAP_WIDTH  = 15;
+	public static int MAP_HEIGHT = 15;
 	public static final int SCREEN_WIDTH  = 640;
 	public static final int SCREEN_HEIGHT = 480;
 	public static final int TEXTURE_SIZE  = 64;
@@ -51,7 +53,10 @@ public class Game extends JFrame implements Runnable {
 		image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData(); // "Connect" image and pixels
 		
-		camera = new Camera(4.5, 4.5, 1, 0, 0, -0.66);
+		loadMap();
+		MAP_WIDTH = map.length;
+		MAP_HEIGHT = map[0].length;
+		camera = new Camera(1.5, 1.5, 1, 0, 0, -0.66);
 		addKeyListener(camera);
 		
 		initTextures();
@@ -67,6 +72,13 @@ public class Game extends JFrame implements Runnable {
 		setVisible(true);
 		
 		start();
+	}
+	
+	/**
+	 * NOTE: For now you can change maps by editing this method.
+	 */
+	private void loadMap() {
+		map = Reader.readMapFromFile("maps/testMap.txt");
 	}
 	
 	/**

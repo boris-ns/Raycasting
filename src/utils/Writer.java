@@ -17,7 +17,7 @@ public class Writer {
 			
 			for (int i = 0; i < map.length; ++i) {
 				for (int j = 0; j < map[i].length; ++j) {
-					writer.print(map[i][j]);
+					writer.print(map[i][j] + " ");
 				}
 				
 				writer.println();
