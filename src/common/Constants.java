@@ -7,4 +7,5 @@ public class Constants {
 	
 	public static final String mapsLocation       = "maps/";
 	public static final String resourcesLocations = "res/";
+	public static final String mapFileFormat      = ".maps";
 }

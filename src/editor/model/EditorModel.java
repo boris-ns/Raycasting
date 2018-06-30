@@ -1,9 +1,10 @@
-package editor;
+package editor.model;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import common.Constants;
+import editor.TileType;
 import utils.ImageLoader;
 
 public class EditorModel {
@@ -34,8 +35,11 @@ public class EditorModel {
 			map[x][y] = type.getValue();
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Index out of bounds! X: " + x + " Y: " + y + " tile type: " + type);
-			e.printStackTrace();
 		}
+	}
+	
+	public void createNewMap(int width, int height) {
+		map = new int[width][height];
 	}
 	
 	public BufferedImage getTileAtIndex(int index) {
@@ -44,5 +48,9 @@ public class EditorModel {
 	
 	public int[][] getMap() {
 		return map;
+	}
+	
+	public void setMap(int[][] map) {
+		this.map = map;
 	}
 }
