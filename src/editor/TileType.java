@@ -5,7 +5,7 @@ package editor;
  */
 public enum TileType {
 
-	BLUESTONE(1), GREYSTONE(2), REDBRICK(3), WOOD(4), PLAYER(5);
+	NO_TILE(0), BLUESTONE(1), GREYSTONE(2), REDBRICK(3), WOOD(4), PLAYER(5);
 	
 	private int value;
 	
@@ -22,6 +22,7 @@ public enum TileType {
 	 */
 	public static TileType getTypeFromValue(int value) {
 		switch (value) {
+		case 0:  return NO_TILE;
 		case 1:  return BLUESTONE;
 		case 2:  return GREYSTONE;
 		case 3:  return REDBRICK;
@@ -34,6 +35,7 @@ public enum TileType {
 	@Override
 	public String toString() {
 		switch (value) {
+		case 0: return "no_tile";
 		case 1: return "bluestone";
 		case 2: return "greystone";
 		case 3: return "redbrick";

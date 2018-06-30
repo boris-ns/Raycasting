@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,23 +21,24 @@ import utils.ImageLoader;
 
 public class EditorView extends JFrame {
 
-	private static final long serialVersionUID    = 1L;
-	public static final int   SCREEN_WIDTH        = 1024;
-	public static final int   SCREEN_HEIGHT       = 768;
+	private static final long serialVersionUID = 1L;
+	public  static final int  SCREEN_WIDTH     = 1024;
+	public  static final int  SCREEN_HEIGHT    = 768;
 	
 	private JMenuBar menuBar;
-	private JMenu fileMenu;
-	private JMenu helpMenu;
 	private JToolBar toolbar;
 	private Worksheet worksheet;
 	
+	private HashMap<String, JMenuItem> menuItems;
+	
 	public EditorView() {
+		menuItems = new HashMap<String, JMenuItem>();
 		setTitle("Rayze - level editor");
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		setLocationRelativeTo(null);
 		setBackground(Color.BLACK);
 	
-		//initMenu(); // TODO: finish
+		initMenu(); 
 		initToolbar();
 		
 		worksheet = new Worksheet();
@@ -46,43 +48,29 @@ public class EditorView extends JFrame {
 	}
 	
 	/**
-	 * TODO: add menu to MVC pattern
+	 * TODO: finish menu
 	 * Initializes menu bar, menus and all menu items.
 	 */
 	private void initMenu() {
-		menuBar = new JMenuBar();
+		menuBar = new JMenuBar();		
+		JMenu fileMenu = new JMenu("File");
+		JMenu helpMenu = new JMenu("Help");
 		
-		fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
-		
-		helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 		
-		JMenuItem itemNew = new JMenuItem("New");
-		fileMenu.add(itemNew);
-		
-		JMenuItem itemOpen = new JMenuItem("Open");
-		fileMenu.add(itemOpen);
-		
+		// Items for file menu
+		addItemToMenu(fileMenu, "New");
+		addItemToMenu(fileMenu, "Open");
 		fileMenu.addSeparator();
-		
-		JMenuItem itemSave = new JMenuItem("Save");
-		fileMenu.add(itemSave);
-		
-		JMenuItem itemSaveAs = new JMenuItem("Save as");
-		fileMenu.add(itemSaveAs);
-		
+		addItemToMenu(fileMenu, "Save");
+		addItemToMenu(fileMenu, "Save as");
 		fileMenu.addSeparator();
+		addItemToMenu(fileMenu, "Exit");
 		
-		JMenuItem itemExit = new JMenuItem("Exit");
-		fileMenu.add(itemExit);
-
 		// Init items for help menu
-		JMenuItem itemAbout = new JMenuItem("About");
-		helpMenu.add(itemAbout);
-		
-		JMenuItem itemHowTo = new JMenuItem("How to use");
-		helpMenu.add(itemHowTo);
+		addItemToMenu(helpMenu, "About");
+		addItemToMenu(helpMenu, "How to use");
 		
 		this.setJMenuBar(menuBar);
 	}
@@ -100,6 +88,7 @@ public class EditorView extends JFrame {
 	    addButtonToToolbar("res/icons/redbrick.jpg");
 	    addButtonToToolbar("res/icons/wood.jpg");
 	    addButtonToToolbar("res/icons/player.jpg");
+	    addButtonToToolbar("res/icons/remove.jpg");
 	    
 	    Container contentPane = getContentPane();
 	    contentPane.add(toolbar, BorderLayout.NORTH);
@@ -112,6 +101,15 @@ public class EditorView extends JFrame {
 		JButton btn = new JButton();
 		btn.setIcon(new ImageIcon(ImageLoader.loadImage(iconPath)));
 	    toolbar.add(btn);
+	}
+	
+	/**
+	 * Adds new JMenuItem object to the parentMenu and in menuItems hashmap
+	 */
+	private void addItemToMenu(JMenu parentMenu, String itemName) {
+		JMenuItem menuItem = new JMenuItem(itemName);
+		menuItems.put(itemName, menuItem);
+		parentMenu.add(menuItem);
 	}
 	
 	/**
@@ -137,7 +135,19 @@ public class EditorView extends JFrame {
 		this.worksheet.addMouseListener(mp);
 	}
 	
+	/**
+	 * Returns Graphics object of worksheet component, 
+	 * so controller can access it for drawing.
+	 */
 	public Graphics getWorksheetGraphics() {
 		return worksheet.getGraphics();
+	}
+	
+	/**
+	 * Sets action listeners for menu items
+	 */
+	public void setMenuItemListener(String menuKey, ActionListener al) {
+		JMenuItem menuItem = menuItems.get(menuKey);
+		menuItem.addActionListener(al);
 	}
 }

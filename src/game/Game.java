@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import editor.TileType;
 import utils.Reader;
 
 public class Game extends JFrame implements Runnable {
@@ -19,6 +20,8 @@ public class Game extends JFrame implements Runnable {
 	public static final int SCREEN_WIDTH  = 640;
 	public static final int SCREEN_HEIGHT = 480;
 	public static final int TEXTURE_SIZE  = 64;
+	
+	private float playerX, playerY;
 
 	private Thread thread;
 	private boolean running;
@@ -49,6 +52,9 @@ public class Game extends JFrame implements Runnable {
 	};
 	
 	public Game() {
+		playerX = 4.5f; // These values are just for default map!
+		playerY = 4.5f;
+		
 		thread = new Thread(this);
 		image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData(); // "Connect" image and pixels
@@ -56,7 +62,7 @@ public class Game extends JFrame implements Runnable {
 		loadMap();
 		MAP_WIDTH = map.length;
 		MAP_HEIGHT = map[0].length;
-		camera = new Camera(1.5, 1.5, 1, 0, 0, -0.66);
+		camera = new Camera(playerX, playerY, 1, 0, 0, -0.66);
 		addKeyListener(camera);
 		
 		initTextures();
@@ -79,6 +85,16 @@ public class Game extends JFrame implements Runnable {
 	 */
 	private void loadMap() {
 		map = Reader.readMapFromFile("maps/testMap.txt");
+		
+		// Set player position
+		for (int i = 0; i < map.length; ++i) {
+			for (int j = 0; j < map[i].length; ++j) {
+				if (map[i][j] == TileType.PLAYER.getValue()) {
+					playerX = i + 1; // @Hack, not sure if this is going to work all the time
+					playerY = j + 1;
+				}
+			}
+		}
 	}
 	
 	/**

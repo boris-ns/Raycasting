@@ -30,6 +30,7 @@ public class EditorController {
 		this.view.setToolbarButtonListeners(new TileBtnListener(3), 2); // redbrick
 		this.view.setToolbarButtonListeners(new TileBtnListener(4), 3); // wood
 		this.view.setToolbarButtonListeners(new TileBtnListener(5), 4); // player
+		this.view.setToolbarButtonListeners(new TileBtnListener(0), 5); // remove
 		
 		this.view.setWorksheetListener(new WorksheetListener());
 	}
