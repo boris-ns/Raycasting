@@ -6,15 +6,19 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import utils.ImageLoader;
@@ -27,6 +31,7 @@ public class EditorView extends JFrame {
 	
 	private JMenuBar menuBar;
 	private JToolBar toolbar;
+	private JLabel labelStatusBar;
 	private Worksheet worksheet;
 	
 	private HashMap<String, JMenuItem> menuItems;
@@ -40,15 +45,13 @@ public class EditorView extends JFrame {
 	
 		initMenu(); 
 		initToolbar();
-		
-		worksheet = new Worksheet();
-		add(worksheet, BorderLayout.CENTER);
+		initWorksheet();
+		addStatusBar();
 		
 		setVisible(true);
 	}
 	
 	/**
-	 * TODO: finish menu
 	 * Initializes menu bar, menus and all menu items.
 	 */
 	private void initMenu() {
@@ -92,6 +95,26 @@ public class EditorView extends JFrame {
 	    
 	    Container contentPane = getContentPane();
 	    contentPane.add(toolbar, BorderLayout.NORTH);
+	}
+	
+	/**
+	 * TODO: finish this scrollpane
+	 */
+	private void initWorksheet() {
+		worksheet = new Worksheet();
+		JScrollPane scroll = new JScrollPane(worksheet, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		add(scroll, BorderLayout.CENTER);
+	}
+
+	/**
+	 * Creates status bar.
+	 */
+	private void addStatusBar() {
+		JPanel statusPanel = new JPanel();
+		labelStatusBar = new JLabel("Ready");
+		statusPanel.add(labelStatusBar);		// TODO: maybe position it to the left ?
+		add(statusPanel, BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -149,5 +172,20 @@ public class EditorView extends JFrame {
 	public void setMenuItemListener(String menuKey, ActionListener al) {
 		JMenuItem menuItem = menuItems.get(menuKey);
 		menuItem.addActionListener(al);
+	}
+	
+	/**
+	 * Adds component listener to the frame. Main purpose is 
+	 * to update frame when resizing.
+	 */
+	public void setComponentListener(ComponentListener cl) {
+		addComponentListener(cl);
+	}
+	
+	/**
+	 * Sets text to the status bar label.
+	 */
+	public void setStatusBarText(String text) {
+		labelStatusBar.setText(text);
 	}
 }

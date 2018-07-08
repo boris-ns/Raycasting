@@ -119,7 +119,8 @@ public class EditorController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			currentTile = TileType.getTypeFromValue(btnVal);
-			System.out.println("New tile is: " + currentTile);
+			view.setStatusBarText("Selected tile: " + currentTile);
+			System.out.println("Selected tile: " + currentTile);
 		}
 	}
 	
@@ -159,6 +160,7 @@ public class EditorController {
 					
 					model.createNewMap(w, h);
 					paint();
+					view.setStatusBarText("Ready");
 				} catch (NumberFormatException exc) {
 					System.out.println("Wrong input arguments for width or height.");
 				}
@@ -181,7 +183,8 @@ public class EditorController {
 
 				model.setMap(map);
 				paint();
-				
+
+				view.setStatusBarText("Ready");
 				System.out.println("Operation OPEN: New current file is " + currentFile);
 			}
 		}
@@ -198,6 +201,8 @@ public class EditorController {
 
 			String fullPath = currentFile + Constants.mapFileFormat;
 			Writer.writeMapToFile(model.getMap(), fullPath);
+			
+			view.setStatusBarText("Successfully saved " + fullPath);
 			System.out.println("Operation SAVE: File is successfully "
 					+ "saved to the location " + fullPath);
 		}
@@ -211,6 +216,7 @@ public class EditorController {
 			String fullPath = currentFile + Constants.mapFileFormat;
 			Writer.writeMapToFile(model.getMap(), fullPath);
 			
+			view.setStatusBarText("Successfully saved " + fullPath);
 			System.out.println("Operation SAVE AS: Map saved. New current file is " + fullPath);
 		}
 	}

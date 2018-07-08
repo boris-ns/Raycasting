@@ -35,7 +35,7 @@ public enum TileType {
 	@Override
 	public String toString() {
 		switch (value) {
-		case 0: return "no_tile";
+		case 0: return "eraser";
 		case 1: return "bluestone";
 		case 2: return "greystone";
 		case 3: return "redbrick";
